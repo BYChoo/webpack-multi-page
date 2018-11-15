@@ -1,0 +1,4 @@
+body {
+  background-color:#999;
+  transform: translateX(-50%);
+}
