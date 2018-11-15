@@ -61,7 +61,7 @@ const rules = function() {
  * 插件
  */
 const plugins = function() {
-  const pages = require('../page');
+  const config = require('./config.js');
   const CopyWebpackPlugin = require('copy-webpack-plugin');
   const HtmlWebpackPlugin = require('html-webpack-plugin');
   const cleanWebpackPlugin = require('clean-webpack-plugin');
@@ -70,7 +70,7 @@ const plugins = function() {
 
   let htmlPlugins = [];
   let Entries = {};
-  pages.map(page => {
+  config.pages.map(page => {
     htmlPlugins.push(
       new HtmlWebpackPlugin({
         filename: `${page.name}.html`,
