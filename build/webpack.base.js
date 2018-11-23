@@ -1,11 +1,5 @@
 const path = require('path');
-const rm = require('rimraf');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const util = require('./util');
-
-rm(path.join(__dirname, '../dist'), err => {
-  if (err) throw err;
-});
 
 module.exports = {
   devtool: 'eval-source-map',

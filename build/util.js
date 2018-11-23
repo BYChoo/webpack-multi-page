@@ -86,7 +86,7 @@ const plugins = function() {
     Entries[page.name] = path.join(__dirname, `../src/script/${page.name}.js`);
   });
 
-  if (isDev) {
+  if (isDev()) {
     htmlPlugins.push(new webpack.HotModuleReplacementPlugin());
   }
 
