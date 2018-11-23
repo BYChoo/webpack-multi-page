@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cross-env NODE_ENV=production webpack --config build/webpack.prod.js",
-    "dev": "nodemon --watch build/ --exec \"NODE_ENV=development  webpack-dev-server --color --progress --config build/webpack.dev.js\""
+    "dev": "nodemon --watch build/ --exec \"cross-env NODE_ENV=development  webpack-dev-server --color --progress --config build/webpack.dev.js\""
   },
   "author": "",
   "license": "ISC",
