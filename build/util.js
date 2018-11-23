@@ -1,6 +1,7 @@
 const isDev = function() {
   return process.env.NODE_ENV === 'development';
 };
+
 /**
  * 处理器
  */
@@ -44,7 +45,10 @@ const rules = function() {
     },
     {
       test: /\.stylus$/,
-      use: ['style-loader', 'css-loader', 'stylus-loader', 'postcss-loader']
+      use: ExtractTextPlugin.extract({
+        fallback: 'style-loader',
+        use: ['css-loader', 'stylus-loader', 'postcss-loader']
+      })
     },
     {
       test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
@@ -67,6 +71,7 @@ const plugins = function() {
   const cleanWebpackPlugin = require('clean-webpack-plugin');
   const path = require('path');
   const webpack = require('webpack');
+  const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
   let htmlPlugins = [];
   let Entries = {};
@@ -88,6 +93,11 @@ const plugins = function() {
   return {
     plugins: [
       ...htmlPlugins,
+      new ExtractTextPlugin({
+        filename: getPath => {
+          return getPath('css/[name].css');
+        }
+      }),
       new cleanWebpackPlugin(['../dist']),
       new CopyWebpackPlugin([
         {
