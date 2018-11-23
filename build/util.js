@@ -26,10 +26,12 @@ const rules = function() {
     },
     {
       test: /\.css$/,
-      use: ExtractTextPlugin.extract({
-        fallback: 'style-loader',
-        use: 'css-loader'
-      })
+      use: isDev()
+        ? ['style-loader', 'css-loader']
+        : ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: 'css-loader'
+          })
     },
     {
       test: /\.(png|jpg)$/,
@@ -45,10 +47,12 @@ const rules = function() {
     },
     {
       test: /\.stylus$/,
-      use: ExtractTextPlugin.extract({
-        fallback: 'style-loader',
-        use: ['css-loader', 'stylus-loader', 'postcss-loader']
-      })
+      use: isDev()
+        ? ['style-loader', 'css-loader', 'stylus-loader', 'postcss-loader']
+        : ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: ['css-loader', 'stylus-loader', 'postcss-loader']
+          })
     },
     {
       test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
@@ -57,6 +61,10 @@ const rules = function() {
         limit: 10240,
         name: 'media/[name].[hash:8].[ext]'
       }
+    },
+    {
+      test: /\.html$/,
+      loader: 'raw-loader'
     }
   ];
 };
