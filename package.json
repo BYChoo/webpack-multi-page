@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "NODE_ENV=production webpack --config build/webpack.prod.js",
+    "build": "cross-env NODE_ENV=production webpack --config build/webpack.prod.js",
     "dev": "nodemon --watch build/ --exec \"NODE_ENV=development  webpack-dev-server --color --progress --config build/webpack.dev.js\""
   },
   "author": "",
@@ -37,9 +37,7 @@
     "webpack": "^4.16.3",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.5",
-    "webpack-merge": "^4.1.4"
-  },
-  "dependencies": {
+    "webpack-merge": "^4.1.4",
     "cross-env": "^5.2.0"
   }
 }
