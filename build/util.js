@@ -7,7 +7,11 @@ const isDev = function() {
  */
 const rules = function() {
   const ExtractTextPlugin = require('extract-text-webpack-plugin');
-  return [
+  const path = require('path');
+  const useEslint = require('../config').useEslint;
+  const useJquery = require('../config').useJquery;
+  let loaders = [];
+  loaders = [
     {
       // 通过require('jquery')来引入
       test: require.resolve('jquery'),
@@ -29,9 +33,9 @@ const rules = function() {
       use: isDev()
         ? ['style-loader', 'css-loader']
         : ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: 'css-loader'
-          })
+          fallback: 'style-loader',
+          use: 'css-loader'
+        })
     },
     {
       test: /\.(png|jpg)$/,
@@ -50,9 +54,9 @@ const rules = function() {
       use: isDev()
         ? ['style-loader', 'css-loader', 'stylus-loader', 'postcss-loader']
         : ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: ['css-loader', 'stylus-loader', 'postcss-loader']
-          })
+          fallback: 'style-loader',
+          use: ['css-loader', 'stylus-loader', 'postcss-loader']
+        })
     },
     {
       test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
@@ -61,19 +65,54 @@ const rules = function() {
         limit: 10240,
         name: 'media/[name].[hash:8].[ext]'
       }
-    },
-    {
-      test: /\.html$/,
-      loader: 'raw-loader'
     }
   ];
+
+  if (useEslint) {
+    loaders.push({
+      test: /\.js$/,
+      loader: 'eslint-loader',
+      enforce: 'pre',
+      include: [path.resolve(__dirname, 'src')],
+      options: {
+        formatter: require('stylish')
+      }
+    });
+  }
+
+  if (useJquery) {
+    loaders.push({
+      // 通过require('jquery')来引入
+      test: require.resolve('jquery'),
+      use: [
+        {
+          loader: 'expose-loader',
+          // 暴露出去的全局变量的名称 随便你自定义
+          options: 'jQuery'
+        },
+        {
+          // 同上
+          loader: 'expose-loader',
+          options: '$'
+        }
+      ]
+    });
+  }
+
+  if (isDev()) {
+    loaders.push({
+      test: /\.html$/,
+      loader: 'raw-loader'
+    });
+  }
+  return loaders;
 };
 
 /**
  * 插件
  */
 const plugins = function() {
-  const config = require('./config.js');
+  const pages = require('../config.js').pages;
   const CopyWebpackPlugin = require('copy-webpack-plugin');
   const HtmlWebpackPlugin = require('html-webpack-plugin');
   const cleanWebpackPlugin = require('clean-webpack-plugin');
@@ -83,7 +122,7 @@ const plugins = function() {
 
   let htmlPlugins = [];
   let Entries = {};
-  config.pages.map(page => {
+  pages.map(page => {
     htmlPlugins.push(
       new HtmlWebpackPlugin({
         filename: `${page.name}.html`,
