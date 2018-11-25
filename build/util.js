@@ -10,6 +10,7 @@ const rules = function() {
   const path = require('path');
   const useEslint = require('../config').useEslint;
   const useJquery = require('../config').useJquery;
+  const usePug = require('../config').usePug;
   let loaders = [];
   loaders = [
     {
@@ -68,6 +69,13 @@ const rules = function() {
     }
   ];
 
+  if (usePug) {
+    loaders.push({
+      test: /\.pug$/,
+      loader: ['raw-loader', 'pug-html-loader']
+    });
+  }
+
   if (useEslint) {
     loaders.push({
       test: /\.js$/,
@@ -113,6 +121,7 @@ const rules = function() {
  */
 const plugins = function() {
   const pages = require('../config.js').pages;
+  const usePug = require('../config').usePug;
   const CopyWebpackPlugin = require('copy-webpack-plugin');
   const HtmlWebpackPlugin = require('html-webpack-plugin');
   const cleanWebpackPlugin = require('clean-webpack-plugin');
@@ -126,7 +135,7 @@ const plugins = function() {
     htmlPlugins.push(
       new HtmlWebpackPlugin({
         filename: `${page.name}.html`,
-        template: path.join(__dirname, `../src/page/${page.name}.html`),
+        template: path.join(__dirname, `../src/page/${page.name}.${usePug ? 'pug' : 'html'}`),
         chunks: [page.name]
       })
     );

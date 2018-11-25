@@ -17,3 +17,8 @@ exports.pages = [
  * 是否引用jquery
  */
 exports.useJquery = true;
+
+/**
+ * 是否使用pug
+ */
+exports.usePug = true;
