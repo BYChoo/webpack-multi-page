@@ -20,11 +20,11 @@ $ npm run build
 - **eslint**
 - **jquery**
 
-可在`config.js`中  选择是否开启
+可在`config.js`中选择是否开启
 
-#  热更新问题
+# 热更新问题
 
- 支持`js`、`css`热更新, 如需要 html 热更新可在`view/页面文件夹/同页面名字.js`中引用`pug/html`文件
+支持`js`、`css`热更新,如需要 html 热更新可在`view/页面文件夹/同页面名字.js`中引用`pug/html`文件
 
 ```
 // index.js
