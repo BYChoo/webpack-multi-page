@@ -9,6 +9,7 @@ const rules = function() {
   const ExtractTextPlugin = require('extract-text-webpack-plugin');
   const useJquery = require('../config').useJquery;
   const usePug = require('../config').usePug;
+  const useTs = require('../config').useTypeScript;
   let loaders = [];
   loaders = [
     {
@@ -67,6 +68,14 @@ const rules = function() {
     }
   ];
 
+  if (useTs) {
+    loaders.push({
+      test: /\.tsx?$/,
+      use: 'ts-loader',
+      exclude: /node_modules/
+    });
+  }
+
   if (usePug) {
     loaders.push({
       test: /\.pug$/,
@@ -101,16 +110,18 @@ const rules = function() {
  */
 const createFiles = function() {
   const usePug = require('../config').usePug;
+  const useTypeScript = require('../config').useTypeScript;
   const path = require('path');
   const glob = require('glob');
   const result = [];
   const type = usePug ? 'pug' : 'html';
+  const scriptType = useTypeScript ? 'ts' : 'js';
   const files = glob.sync(path.join(__dirname, `../src/views/**/*.${type}`));
   for (file of files) {
     result.push({
       name: usePug ? file.match(/\w{0,}(?=\.pug)/)[0] : file.match(/\w{0,}(?=\.html)/)[0],
       templatePath: file,
-      jsPath: file.replace(type, 'js'),
+      jsPath: file.replace(type, scriptType),
       stylePath: file.replace(type, 'stylus')
     });
   }

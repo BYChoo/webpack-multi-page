@@ -12,3 +12,8 @@ exports.useJquery = true;
  * 是否使用pug
  */
 exports.usePug = true;
+
+/**
+ * 是否使用typescript
+ */
+exports.useTypeScript = true;
