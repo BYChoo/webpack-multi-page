@@ -7,8 +7,6 @@ const isDev = function() {
  */
 const rules = function() {
   const ExtractTextPlugin = require('extract-text-webpack-plugin');
-  const path = require('path');
-  const useEslint = require('../config').useEslint;
   const useJquery = require('../config').useJquery;
   const usePug = require('../config').usePug;
   let loaders = [];
@@ -76,18 +74,6 @@ const rules = function() {
     });
   }
 
-  if (useEslint) {
-    loaders.push({
-      test: /\.js$/,
-      loader: 'eslint-loader',
-      enforce: 'pre',
-      include: [path.resolve(__dirname, 'src')],
-      options: {
-        formatter: require('stylish')
-      }
-    });
-  }
-
   if (useJquery) {
     loaders.push({
       // 通过require('jquery')来引入
@@ -107,12 +93,6 @@ const rules = function() {
     });
   }
 
-  if (isDev()) {
-    loaders.push({
-      test: /\.html$/,
-      loader: 'raw-loader'
-    });
-  }
   return loaders;
 };
 
@@ -124,9 +104,7 @@ const plugins = function() {
   const usePug = require('../config').usePug;
   const CopyWebpackPlugin = require('copy-webpack-plugin');
   const HtmlWebpackPlugin = require('html-webpack-plugin');
-  const cleanWebpackPlugin = require('clean-webpack-plugin');
   const path = require('path');
-  const webpack = require('webpack');
   const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
   let htmlPlugins = [];
@@ -142,10 +120,6 @@ const plugins = function() {
     Entries[page.name] = path.join(__dirname, `../src/script/${page.name}.js`);
   });
 
-  if (isDev()) {
-    htmlPlugins.push(new webpack.HotModuleReplacementPlugin());
-  }
-
   return {
     plugins: [
       ...htmlPlugins,
@@ -154,7 +128,6 @@ const plugins = function() {
           return getPath('css/[name].css');
         }
       }),
-      new cleanWebpackPlugin(['../dist']),
       new CopyWebpackPlugin([
         {
           // 源文件目录
