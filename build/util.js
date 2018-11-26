@@ -97,11 +97,33 @@ const rules = function() {
 };
 
 /**
+ * 创建打包路径
+ */
+const createFiles = function() {
+  const usePug = require('../config').usePug;
+  const path = require('path');
+  const glob = require('glob');
+  const result = [];
+  const type = usePug ? 'pug' : 'html';
+  const files = glob.sync(path.join(__dirname, `../src/views/**/*.${type}`));
+  for (file of files) {
+    result.push({
+      name: usePug ? file.match(/\w{0,}(?=\.pug)/)[0] : file.match(/\w{0,}(?=\.html)/)[0],
+      templatePath: file,
+      jsPath: file.replace(type, 'js'),
+      stylePath: file.replace(type, 'stylus')
+    });
+  }
+  return result;
+};
+
+/**
  * 插件
  */
 const plugins = function() {
-  const pages = require('../config.js').pages;
-  const usePug = require('../config').usePug;
+  const files = createFiles();
+  console.log('----------');
+  console.log(files);
   const CopyWebpackPlugin = require('copy-webpack-plugin');
   const HtmlWebpackPlugin = require('html-webpack-plugin');
   const path = require('path');
@@ -109,15 +131,15 @@ const plugins = function() {
 
   let htmlPlugins = [];
   let Entries = {};
-  pages.map(page => {
+  files.map(file => {
     htmlPlugins.push(
       new HtmlWebpackPlugin({
-        filename: `${page.name}.html`,
-        template: path.join(__dirname, `../src/page/${page.name}.${usePug ? 'pug' : 'html'}`),
-        chunks: [page.name]
+        filename: `${file.name}.html`,
+        template: file.templatePath,
+        chunks: [file.name]
       })
     );
-    Entries[page.name] = path.join(__dirname, `../src/script/${page.name}.js`);
+    Entries[file.name] = file.jsPath;
   });
 
   return {

@@ -2,7 +2,6 @@ const merge = require('webpack-merge');
 const base = require('./webpack.base');
 const path = require('path');
 const webpack = require('webpack');
-
 const useEslint = require('../config').useEslint;
 
 const rules = function() {
@@ -36,13 +35,13 @@ module.exports = merge(base, {
   },
 
   module: {
-    rules: [{
-      test: /\.html$/,
-      loader: 'raw-loader'
-    }].concat(rules())
+    rules: [
+      {
+        test: /\.html$/,
+        loader: 'raw-loader'
+      }
+    ].concat(rules())
   },
 
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ]
+  plugins: [new webpack.HotModuleReplacementPlugin()]
 });
