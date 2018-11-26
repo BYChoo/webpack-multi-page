@@ -11,4 +11,4 @@ exports.useJquery = true;
 /**
  * 是否使用pug
  */
-exports.usePug = false;
+exports.usePug = true;

@@ -122,8 +122,6 @@ const createFiles = function() {
  */
 const plugins = function() {
   const files = createFiles();
-  console.log('----------');
-  console.log(files);
   const CopyWebpackPlugin = require('copy-webpack-plugin');
   const HtmlWebpackPlugin = require('html-webpack-plugin');
   const path = require('path');
