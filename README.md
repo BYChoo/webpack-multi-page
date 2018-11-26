@@ -19,6 +19,7 @@ $ npm run build
 - **pug**
 - **eslint**
 - **jquery**
+- **typescript**
 
 可在`config.js`中选择是否开启
 
