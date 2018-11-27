@@ -174,5 +174,5 @@ const plugins = function() {
   };
 };
 
-exports.rules = rules;
-exports.plugins = plugins;
+exports.rules = rules();
+exports.plugins = plugins();
