@@ -13,22 +13,6 @@ const rules = function() {
   let loaders = [];
   loaders = [
     {
-      // 通过require('jquery')来引入
-      test: require.resolve('jquery'),
-      use: [
-        {
-          loader: 'expose-loader',
-          // 暴露出去的全局变量的名称 随便你自定义
-          options: 'jQuery'
-        },
-        {
-          // 同上
-          loader: 'expose-loader',
-          options: '$'
-        }
-      ]
-    },
-    {
       test: /\.css$/,
       use: isDev()
         ? ['style-loader', 'css-loader']
