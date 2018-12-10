@@ -6,7 +6,7 @@ exports.useEslint = true;
 /**
  * 是否引用jquery
  */
-exports.useJquery = true;
+exports.useJquery = false;
 
 /**
  * 是否使用pug
@@ -16,4 +16,4 @@ exports.usePug = true;
 /**
  * 是否使用typescript
  */
-exports.useTypeScript = true;
+exports.useTypeScript = false;
