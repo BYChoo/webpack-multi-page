@@ -11,10 +11,10 @@ const rules = function() {
     loaders.push({
       test: /\.js$/,
       loader: 'eslint-loader',
+      exclude: /node_modules/,
       enforce: 'pre',
-      include: [path.resolve(__dirname, 'src')],
       options: {
-        formatter: require('stylish')
+        formatter: require('eslint-friendly-formatter')
       }
     });
   }
