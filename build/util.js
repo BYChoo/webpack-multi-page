@@ -10,6 +10,7 @@ const rules = function() {
   const useJquery = require('../config').useJquery;
   const usePug = require('../config').usePug;
   const useTs = require('../config').useTypeScript;
+  const path = require('path');
   let loaders = [];
   loaders = [
     {
@@ -26,7 +27,9 @@ const rules = function() {
       loader: 'url-loader',
       options: {
         limit: 10000,
-        name: '[name].[hash:8].[ext]'
+        name: '[name].[hash:8].[ext]',
+        outputPath: 'image/',
+        publicPath: isDev() ?  '' : path.join(__dirname, '../dist/image'),
       }
     },
     {
@@ -63,7 +66,7 @@ const rules = function() {
   if (usePug) {
     loaders.push({
       test: /\.pug$/,
-      loader: ['raw-loader', 'pug-html-loader']
+      loader: ['html-loader', 'pug-html-loader']
     });
   }
 
