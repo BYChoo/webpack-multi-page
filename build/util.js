@@ -14,6 +14,10 @@ const rules = function() {
   let loaders = [];
   loaders = [
     {
+      test: /\.html$/,
+      use: ['html-loader']
+    },
+    {
       test: /\.css$/,
       use: isDev()
         ? ['style-loader', 'css-loader']
@@ -66,7 +70,7 @@ const rules = function() {
   if (usePug) {
     loaders.push({
       test: /\.pug$/,
-      loader: ['html-loader', 'pug-html-loader']
+      loader: ['pug-loader']
     });
   }
 
