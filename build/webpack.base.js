@@ -11,5 +11,16 @@ module.exports = {
   module: {
     rules: util.rules
   },
-  plugins: util.plugins.plugins
+  plugins: util.plugins.plugins,
+  optimization: {
+    splitChunks: {
+      chunks: 'async',
+      minSize: 30000,
+      minChunks: 2,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      automaticNameDelimiter: '~',
+      name: true
+    }
+  }
 };

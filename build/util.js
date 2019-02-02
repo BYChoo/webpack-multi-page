@@ -38,7 +38,10 @@ const rules = function() {
     },
     {
       test: /\.js$/,
-      use: ['babel-loader']
+      use: {
+        loader: 'babel-loader'
+      },
+      exclude: '/node_modules/'
     },
     {
       test: /\.stylus$/,
@@ -128,6 +131,7 @@ const plugins = function() {
   const HtmlWebpackPlugin = require('html-webpack-plugin');
   const path = require('path');
   const ExtractTextPlugin = require('extract-text-webpack-plugin');
+  const webpack = require('webpack');
 
   let htmlPlugins = [];
   let Entries = {};
