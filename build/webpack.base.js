@@ -19,7 +19,6 @@ module.exports = {
       minChunks: 2,
       maxAsyncRequests: 5,
       maxInitialRequests: 3,
-      automaticNameDelimiter: '~',
       name: true
     }
   }
