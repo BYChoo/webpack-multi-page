@@ -38,9 +38,7 @@ const rules = function() {
     },
     {
       test: /\.js$/,
-      use: {
-        loader: 'babel-loader'
-      },
+      loader: 'happypack/loader?id=happyBabel',
       exclude: '/node_modules/'
     },
     {
@@ -132,6 +130,7 @@ const plugins = function() {
   const path = require('path');
   const ExtractTextPlugin = require('extract-text-webpack-plugin');
   const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+  const HappyPack = require('happypack');
 
   let htmlPlugins = [];
   let Entries = {};
@@ -149,6 +148,13 @@ const plugins = function() {
   return {
     plugins: [
       ...htmlPlugins,
+      new HappyPack({
+        id: 'happyBabel',
+        threads: 4,
+        loaders: [{
+          loader: 'babel-loader?cacheDirectory=true',
+        }]
+      }),
       new ExtractTextPlugin({
         filename: getPath => {
           return getPath('css/[name].css');
