@@ -46,10 +46,10 @@ const rules = function() {
     {
       test: /\.stylus$/,
       use: isDev()
-        ? ['style-loader', 'css-loader', 'stylus-loader', 'postcss-loader']
+        ? ['style-loader', 'css-loader', 'postcss-loader', 'stylus-loader']
         : ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: ['css-loader', 'stylus-loader', 'postcss-loader']
+          use: ['css-loader', 'postcss-loader', 'stylus-loader']
         })
     },
     {
