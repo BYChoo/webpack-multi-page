@@ -131,7 +131,7 @@ const plugins = function() {
   const HtmlWebpackPlugin = require('html-webpack-plugin');
   const path = require('path');
   const ExtractTextPlugin = require('extract-text-webpack-plugin');
-  const webpack = require('webpack');
+  const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 
   let htmlPlugins = [];
   let Entries = {};
@@ -163,7 +163,8 @@ const plugins = function() {
           // 筛选过滤，这里复制所有文件，连同文件夹
           ignore: ['.*']
         }
-      ])
+      ]),
+      new ProgressBarPlugin()
     ],
     Entries
   };

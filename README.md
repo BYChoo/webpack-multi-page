@@ -14,6 +14,11 @@ $ npm install
 $ npm run build
 ```
 
+# 自动生成页面
+```
+$ npm run new:view 
+```
+
 # 项目配置
 
 - **pug**
